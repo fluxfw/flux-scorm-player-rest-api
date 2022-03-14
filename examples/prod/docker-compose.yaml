@@ -1,0 +1,32 @@
+version: "3.6"
+services:
+    scorm-player-database:
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=scorm-player
+            - MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/database_scorm_player_password
+        image: mongo:latest
+        restart: always
+        secrets:
+            - database_scorm_player_password
+        volumes:
+            - ./data/db:/data/db
+    scorm-player-rest-api:
+        depends_on:
+            - scorm-player-database
+        environment:
+            - FLUX_SCORM_PLAYER_API_DATABASE_PASSWORD_FILE=/run/secrets/database_scorm_player_password
+        image: docker-registry.fluxpublisher.ch/flux-scorm-player/rest-api:latest
+        restart: always
+        secrets:
+            - database_scorm_player_password
+        volumes:
+            - ./data/scorm:/scorm
+    other-service:
+        depends_on:
+            - scorm-player-rest-api
+        environment:
+            [- FLUX_SCORM_PLAYER_REST_API_HOST=scorm-player-rest-api]
+            [- FLUX_SCORM_PLAYER_REST_API_PORT=9501]
+secrets:
+    database_scorm_player_password:
+        file: ./data/secrets/database_scorm_player_password

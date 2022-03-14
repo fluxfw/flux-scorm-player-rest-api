@@ -1,0 +1,6 @@
+*
+!.gitignore
+!delete.sh
+!docker-compose.yaml
+!play.sh
+!upload.sh
