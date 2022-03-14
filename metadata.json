@@ -1,0 +1,19 @@
+{
+    "description": "Scorm Player Rest Api for play scorm modules",
+    "topics": [
+        "api",
+        "docker",
+        "learn",
+        "learning",
+        "module",
+        "mongo",
+        "mongodb",
+        "package",
+        "php",
+        "play",
+        "player",
+        "rest",
+        "scorm"
+    ],
+    "homepage": "https://github.com/fluxapps/flux-scorm-player-rest-api"
+}
