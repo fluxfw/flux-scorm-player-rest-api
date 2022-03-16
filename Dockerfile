@@ -58,6 +58,6 @@ USER www-data:www-data
 
 EXPOSE 9501
 
-ENTRYPOINT ["/flux-scorm-player-rest-api/bin/docker-entrypoint.php"]
+ENTRYPOINT ["/flux-scorm-player-rest-api/bin/server.php"]
 
 COPY --from=build /flux-scorm-player-rest-api /flux-scorm-player-rest-api
