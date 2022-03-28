@@ -2,17 +2,15 @@
 
 namespace FluxScormPlayerRestApi\Adapter\Server;
 
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Collector\FolderRouteCollector;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Handler\SwooleHandler;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Server\SwooleRestApiServer;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Server\SwooleRestApiServerConfigDto;
 use FluxScormPlayerRestApi\Libs\FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
-use Swoole\Http\Server;
 
 class ScormPlayerRestApiServer
 {
 
     private function __construct(
-        private readonly ScormPlayerRestApiServerConfigDto $scorm_player_rest_api_server_config,
-        private readonly SwooleHandler $swoole_handler
+        private readonly SwooleRestApiServer $swoole_rest_api_server
     ) {
 
     }
@@ -24,15 +22,19 @@ class ScormPlayerRestApiServer
         $scorm_player_rest_api_server_config ??= ScormPlayerRestApiServerConfigDto::newFromEnv();
 
         return new static(
-            $scorm_player_rest_api_server_config,
-            SwooleHandler::new(
-                FolderRouteCollector::new(
-                    __DIR__ . "/../Route",
-                    [
-                        ScormPlayerApi::new(
-                            $scorm_player_rest_api_server_config->scorm_player_api_config
-                        )
-                    ]
+            SwooleRestApiServer::new(
+                ScormPlayerRestApiServerRouteCollector::new(
+                    ScormPlayerApi::new(
+                        $scorm_player_rest_api_server_config->scorm_player_api_config
+                    )
+                ),
+                null,
+                SwooleRestApiServerConfigDto::new(
+                    $scorm_player_rest_api_server_config->https_cert,
+                    $scorm_player_rest_api_server_config->https_key,
+                    $scorm_player_rest_api_server_config->listen,
+                    $scorm_player_rest_api_server_config->port,
+                    $scorm_player_rest_api_server_config->max_upload_size
                 )
             )
         );
@@ -41,25 +43,6 @@ class ScormPlayerRestApiServer
 
     public function init() : void
     {
-        $options = [
-            "package_max_length" => $this->scorm_player_rest_api_server_config->max_upload_size
-        ];
-        $sock_type = SWOOLE_TCP;
-
-        if ($this->scorm_player_rest_api_server_config->https_cert !== null) {
-            $options += [
-                "ssl_cert_file" => $this->scorm_player_rest_api_server_config->https_cert,
-                "ssl_key_file"  => $this->scorm_player_rest_api_server_config->https_key
-            ];
-            $sock_type += SWOOLE_SSL;
-        }
-
-        $server = new Server($this->scorm_player_rest_api_server_config->listen, $this->scorm_player_rest_api_server_config->port, SWOOLE_PROCESS, $sock_type);
-
-        $server->set($options);
-
-        $server->on("request", [$this->swoole_handler, "handle"]);
-
-        $server->start();
+        $this->swoole_rest_api_server->init();
     }
 }
