@@ -39,7 +39,7 @@ FROM $PHP_CLI_IMAGE
 ARG MONGODB_SOURCE_URL
 ARG SWOOLE_SOURCE_URL
 
-LABEL org.opencontainers.image.source="https://github.com/fluxapps/flux-scorm-player-rest-api"
+LABEL org.opencontainers.image.source="https://github.com/flux-eco/flux-scorm-player-rest-api"
 LABEL maintainer="fluxlabs <support@fluxlabs.ch> (https://fluxlabs.ch)"
 
 RUN apk add --no-cache libstdc++ libzip && \
