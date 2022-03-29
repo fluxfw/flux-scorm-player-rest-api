@@ -12,7 +12,7 @@ docker exec -u root:root %container_name% chown www-data:www-data -R /scorm
 
 ## Environment variables
 
-First look at [flux-scorm-player-api](https://github.com/fluxapps/flux-scorm-player-api#environment-variables)
+First look at [flux-scorm-player-api](https://github.com/flux-eco/flux-scorm-player-api#environment-variables)
 
 | Variable | Description | Default value |
 | -------- | ----------- | ------------- |
