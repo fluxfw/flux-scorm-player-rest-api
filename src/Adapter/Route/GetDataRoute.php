@@ -3,12 +3,12 @@
 namespace FluxScormPlayerRestApi\Adapter\Route;
 
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Body\JsonBodyDto;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Libs\FluxRestBaseApi\Method\DefaultMethod;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Libs\FluxRestBaseApi\Method\Method;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Libs\FluxRestBaseApi\Status\DefaultStatus;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Method\DefaultMethod;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Method\Method;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Request\RequestDto;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Response\ResponseDto;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Route\Route;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Status\DefaultStatus;
 use FluxScormPlayerRestApi\Libs\FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
 
 class GetDataRoute implements Route
