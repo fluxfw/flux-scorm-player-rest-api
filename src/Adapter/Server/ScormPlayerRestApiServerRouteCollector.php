@@ -9,7 +9,7 @@ use FluxScormPlayerRestApi\Adapter\Route\PlayRoute;
 use FluxScormPlayerRestApi\Adapter\Route\PostDataRoute;
 use FluxScormPlayerRestApi\Adapter\Route\StaticRoute;
 use FluxScormPlayerRestApi\Adapter\Route\UploadRoute;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Collector\RouteCollector;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Collector\RouteCollector;
 use FluxScormPlayerRestApi\Libs\FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
 
 class ScormPlayerRestApiServerRouteCollector implements RouteCollector
