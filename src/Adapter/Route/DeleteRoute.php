@@ -2,11 +2,11 @@
 
 namespace FluxScormPlayerRestApi\Adapter\Route;
 
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Method\DefaultMethod;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Method\Method;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Request\RequestDto;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Response\ResponseDto;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Route\Route;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Method\DefaultMethod;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Method\Method;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Route;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Server\ServerRequestDto;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Server\ServerResponseDto;
 use FluxScormPlayerRestApi\Libs\FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
 
 class DeleteRoute implements Route
@@ -52,7 +52,7 @@ class DeleteRoute implements Route
     }
 
 
-    public function handle(RequestDto $request) : ?ResponseDto
+    public function handle(ServerRequestDto $request) : ?ServerResponseDto
     {
         $this->scorm_player_api->deleteScormPackage(
             $request->getParam(
