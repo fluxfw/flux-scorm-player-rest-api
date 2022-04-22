@@ -8,9 +8,14 @@ if [ -z `command -v copy-from-docker-image` ]; then
 fi
 
 if [ -n "$CI_REGISTRY" ] && [ -n "$CI_PROJECT_NAMESPACE" ]; then
-    image="$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-scorm-player-rest-api:latest"
+    image="$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-scorm-player-rest-api"
 else
-    image="docker-registry.fluxpublisher.ch/flux-scorm-player/rest-api:latest"
+    image="docker-registry.fluxpublisher.ch/flux-scorm-player/rest-api"
 fi
 
-(cd "`dirname "$0"`/.." && copy-from-docker-image "$image" /flux-scorm-player-rest-api/libs libs)
+tag="$1"
+if [ -z "$tag" ]; then
+    tag="latest"
+fi
+
+(cd "`dirname "$0"`/.." && copy-from-docker-image "$image:$tag" /flux-scorm-player-rest-api/libs libs)
