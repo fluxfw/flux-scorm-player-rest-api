@@ -8,21 +8,21 @@ FROM $FLUX_NAMESPACE_CHANGER_IMAGE:latest AS flux_autoload_api_build
 ENV FLUX_NAMESPACE_CHANGER_FROM_NAMESPACE FluxAutoloadApi
 ENV FLUX_NAMESPACE_CHANGER_TO_NAMESPACE FluxScormPlayerRestApi\\Libs\\FluxAutoloadApi
 COPY --from=flux_autoload_api /flux-autoload-api /code
-RUN /flux-namespace-changer/bin/docker-entrypoint.php
+RUN change-namespace
 
 FROM $FLUX_REST_API_IMAGE:latest AS flux_rest_api
 FROM $FLUX_NAMESPACE_CHANGER_IMAGE:latest AS flux_rest_api_build
 ENV FLUX_NAMESPACE_CHANGER_FROM_NAMESPACE FluxRestApi
 ENV FLUX_NAMESPACE_CHANGER_TO_NAMESPACE FluxScormPlayerRestApi\\Libs\\FluxRestApi
 COPY --from=flux_rest_api /flux-rest-api /code
-RUN /flux-namespace-changer/bin/docker-entrypoint.php
+RUN change-namespace
 
 FROM $FLUX_SCORM_PLAYER_API_IMAGE:latest AS flux_scorm_player_api
 FROM $FLUX_NAMESPACE_CHANGER_IMAGE:latest AS flux_scorm_player_api_build
 ENV FLUX_NAMESPACE_CHANGER_FROM_NAMESPACE FluxScormPlayerApi
 ENV FLUX_NAMESPACE_CHANGER_TO_NAMESPACE FluxScormPlayerRestApi\\Libs\\FluxScormPlayerApi
 COPY --from=flux_scorm_player_api /flux-scorm-player-api /code
-RUN /flux-namespace-changer/bin/docker-entrypoint.php
+RUN change-namespace
 
 FROM alpine:latest AS build
 
