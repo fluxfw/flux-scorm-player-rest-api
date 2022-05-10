@@ -35,7 +35,7 @@ class UploadRoute implements Route
     public function getDocuRequestBodyTypes() : ?array
     {
         return [
-            DefaultBodyType::FORM_DATA
+            DefaultBodyType::FORM_DATA_2
         ];
     }
 
