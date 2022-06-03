@@ -7,6 +7,9 @@ use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Body\TextBodyDto;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Body\Type\DefaultBodyType;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Method\DefaultMethod;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Method\Method;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteContentTypeDocumentationDto;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteDocumentationDto;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteResponseDocumentationDto;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Route;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Server\ServerRequestDto;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Server\ServerResponseDto;
@@ -32,17 +35,32 @@ class UploadRoute implements Route
     }
 
 
-    public function getDocuRequestBodyTypes() : ?array
+    public function getDocumentation() : ?RouteDocumentationDto
     {
-        return [
-            DefaultBodyType::FORM_DATA_2
-        ];
-    }
-
-
-    public function getDocuRequestQueryParams() : ?array
-    {
-        return null;
+        return RouteDocumentationDto::new(
+            $this->getRoute(),
+            $this->getMethod(),
+            "Upload scorm package",
+            null,
+            null,
+            null,
+            [
+                RouteContentTypeDocumentationDto::new(
+                    DefaultBodyType::FORM_DATA_2,
+                    "object",
+                    "Scorm package"
+                )
+            ],
+            [
+                RouteResponseDocumentationDto::new(),
+                RouteResponseDocumentationDto::new(
+                    DefaultBodyType::TEXT,
+                    DefaultStatus::_400,
+                    null,
+                    "No form data body"
+                )
+            ]
+        );
     }
 
 

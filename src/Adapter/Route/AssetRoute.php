@@ -2,8 +2,12 @@
 
 namespace FluxScormPlayerRestApi\Adapter\Route;
 
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Body\Type\CustomBodyType;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Method\DefaultMethod;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Method\Method;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteDocumentationDto;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteParamDocumentationDto;
+use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteResponseDocumentationDto;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Route;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Server\ServerRequestDto;
 use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Server\ServerResponseDto;
@@ -29,15 +33,45 @@ class AssetRoute implements Route
     }
 
 
-    public function getDocuRequestBodyTypes() : ?array
+    public function getDocumentation() : ?RouteDocumentationDto
     {
-        return null;
-    }
+        return RouteDocumentationDto::new(
+            $this->getRoute(),
+            $this->getMethod(),
+            "Get scorm package asset file",
+            null,
+            [
+                RouteParamDocumentationDto::new(
+                    "path",
+                    "string",
+                    "Scorm package asset file path"
+                ),
+                RouteParamDocumentationDto::new(
+                    "scorm_id",
+                    "string",
+                    "Scorm package id"
+                )
+            ],
+            null,
+            null,
+            [
+                RouteResponseDocumentationDto::new(
+                    CustomBodyType::factory(
+                        "*"
+                    ),
+                    null,
+                    null,
+                    "Scorm package asset file"
 
-
-    public function getDocuRequestQueryParams() : ?array
-    {
-        return null;
+                ),
+                RouteResponseDocumentationDto::new(
+                    null,
+                    DefaultStatus::_404,
+                    null,
+                    "Scorm package asset file not found"
+                )
+            ]
+        );
     }
 
 
