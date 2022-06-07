@@ -78,7 +78,7 @@ class UploadRoute implements Route
 
     public function handle(ServerRequestDto $request) : ?ServerResponseDto
     {
-        if (!($request->getParsedBody() instanceof FormDataBodyDto)) {
+        if (!($request->parsed_body instanceof FormDataBodyDto)) {
             return ServerResponseDto::new(
                 TextBodyDto::new(
                     "No form data body"
@@ -88,9 +88,9 @@ class UploadRoute implements Route
         }
 
         $this->scorm_player_api->uploadScormPackage(
-            $request->getParsedBody()->getData()["id"],
-            $request->getParsedBody()->getData()["title"],
-            $request->getParsedBody()->getFiles()["file"]["tmp_name"]
+            $request->parsed_body->data["id"],
+            $request->parsed_body->data["title"],
+            $request->parsed_body->files["file"]["tmp_name"]
         );
 
         return null;
