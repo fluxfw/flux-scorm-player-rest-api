@@ -20,10 +20,12 @@ RUN change-namespace /code/flux-scorm-player-api FluxScormPlayerApi FluxScormPla
 
 FROM alpine:latest AS build
 
-COPY --from=build_namespaces /code/flux-autoload-api /flux-scorm-player-rest-api/libs/flux-autoload-api
-COPY --from=build_namespaces /code/flux-rest-api /flux-scorm-player-rest-api/libs/flux-rest-api
-COPY --from=build_namespaces /code/flux-scorm-player-api /flux-scorm-player-rest-api/libs/flux-scorm-player-api
-COPY . /flux-scorm-player-rest-api
+COPY --from=build_namespaces /code/flux-autoload-api /build/flux-scorm-player-rest-api/libs/flux-autoload-api
+COPY --from=build_namespaces /code/flux-rest-api /build/flux-scorm-player-rest-api/libs/flux-rest-api
+COPY --from=build_namespaces /code/flux-scorm-player-api /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api
+COPY . /build/flux-scorm-player-rest-api
+
+RUN (cd /build && tar -czf flux-scorm-player-rest-api.tar.gz flux-scorm-player-rest-api)
 
 FROM php:8.1-cli-alpine
 
@@ -48,7 +50,7 @@ EXPOSE 9501
 
 ENTRYPOINT ["/flux-scorm-player-rest-api/bin/server.php"]
 
-COPY --from=build /flux-scorm-player-rest-api /flux-scorm-player-rest-api
+COPY --from=build /build /
 
 ARG COMMIT_SHA
 LABEL org.opencontainers.image.revision="$COMMIT_SHA"
