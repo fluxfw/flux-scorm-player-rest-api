@@ -14,7 +14,7 @@ services:
             - scorm-player-database
         environment:
             - FLUX_SCORM_PLAYER_API_DATABASE_PASSWORD_FILE=/run/secrets/database_scorm_player_password
-        image: docker-registry.fluxpublisher.ch/flux-scorm-player/rest-api:latest
+        image: docker-registry.fluxpublisher.ch/flux-scorm-player-rest-api:latest
         restart: always
         secrets:
             - database_scorm_player_password
