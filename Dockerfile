@@ -1,33 +1,16 @@
-ARG FLUX_AUTOLOAD_API_IMAGE
-ARG FLUX_NAMESPACE_CHANGER_IMAGE=docker-registry.fluxpublisher.ch/flux-namespace-changer
-ARG FLUX_REST_API_IMAGE
-ARG FLUX_SCORM_PLAYER_API_IMAGE
+FROM php:cli-alpine AS build
 
-FROM $FLUX_AUTOLOAD_API_IMAGE:v2022-06-22-1 AS flux_autoload_api
-FROM $FLUX_REST_API_IMAGE:v2022-06-29-2 AS flux_rest_api
-FROM $FLUX_SCORM_PLAYER_API_IMAGE:v2022-07-11-1 AS flux_scorm_player_api
+RUN (mkdir -p /flux-namespace-changer && cd /flux-namespace-changer && wget -O - https://github.com/flux-eco/flux-namespace-changer/releases/download/v2022-07-12-1/flux-namespace-changer-v2022-07-12-1-build.tar.gz | tar -xz --strip-components=1)
 
-FROM $FLUX_NAMESPACE_CHANGER_IMAGE:v2022-06-23-1 AS build_namespaces
+RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-autoload-api && cd /build/flux-scorm-player-rest-api/libs/flux-autoload-api && wget -O - https://github.com/flux-eco/flux-autoload-api/releases/download/v2022-07-12-1/flux-autoload-api-v2022-07-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxAutoloadApi FluxScormPlayerRestApi\\Libs\\FluxAutoloadApi)
 
-COPY --from=flux_autoload_api /flux-autoload-api /code/flux-autoload-api
-RUN change-namespace /code/flux-autoload-api FluxAutoloadApi FluxScormPlayerRestApi\\Libs\\FluxAutoloadApi
+RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-rest-api && cd /build/flux-scorm-player-rest-api/libs/flux-rest-api && wget -O - https://github.com/flux-eco/flux-rest-api/releases/download/v2022-07-12-1/flux-rest-api-v2022-07-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxRestApi FluxScormPlayerRestApi\\Libs\\FluxRestApi)
 
-COPY --from=flux_rest_api /flux-rest-api /code/flux-rest-api
-RUN change-namespace /code/flux-rest-api FluxRestApi FluxScormPlayerRestApi\\Libs\\FluxRestApi
+RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && cd /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && wget -O - https://github.com/flux-eco/flux-scorm-player-api/releases/download/v2022-07-12-1/flux-scorm-player-api-v2022-07-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxScormPlayerApi FluxScormPlayerRestApi\\Libs\\FluxScormPlayerApi)
 
-COPY --from=flux_scorm_player_api /flux-scorm-player-api /code/flux-scorm-player-api
-RUN change-namespace /code/flux-scorm-player-api FluxScormPlayerApi FluxScormPlayerRestApi\\Libs\\FluxScormPlayerApi
-
-FROM alpine:latest AS build
-
-COPY --from=build_namespaces /code/flux-autoload-api /build/flux-scorm-player-rest-api/libs/flux-autoload-api
-COPY --from=build_namespaces /code/flux-rest-api /build/flux-scorm-player-rest-api/libs/flux-rest-api
-COPY --from=build_namespaces /code/flux-scorm-player-api /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api
 COPY . /build/flux-scorm-player-rest-api
 
-RUN (cd /build && tar -czf flux-scorm-player-rest-api.tar.gz flux-scorm-player-rest-api)
-
-FROM php:8.1-cli-alpine
+FROM php:cli-alpine
 
 LABEL org.opencontainers.image.source="https://github.com/flux-caps/flux-scorm-player-rest-api"
 LABEL maintainer="fluxlabs <support@fluxlabs.ch> (https://fluxlabs.ch)"
