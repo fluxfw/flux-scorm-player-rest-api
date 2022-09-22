@@ -1,7 +1,6 @@
 stages:
     - build
     - publish
-    - build-artifact
     - publish-utils
 
 default:
@@ -36,18 +35,6 @@ publish:
     only:
         - main
         - tags
-
-build-artifact:
-    stage: build-artifact
-    image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-docker-gitlab-build-artifact:latest
-    script:
-        - create-gitlab-artifact-from-docker-build $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG /$CI_PROJECT_NAME build.tar.gz
-    artifacts:
-        paths:
-            - build.tar.gz
-        expire_in: 5 minutes
-    only:
-        - /^v[0-9-]+$/
 
 publish-utils:
     stage: publish-utils
