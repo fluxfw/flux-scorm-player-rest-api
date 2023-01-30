@@ -2,10 +2,10 @@
 
 namespace FluxScormPlayerRestApi\Adapter\Server;
 
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Api\RestApi;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Collector\RouteCollector;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Server\SwooleServerConfigDto;
-use FluxScormPlayerRestApi\Libs\FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
+use FluxRestApi\Adapter\Api\RestApi;
+use FluxRestApi\Adapter\Route\Collector\RouteCollector;
+use FluxRestApi\Adapter\Server\SwooleServerConfigDto;
+use FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
 
 class ScormPlayerRestApiServer
 {

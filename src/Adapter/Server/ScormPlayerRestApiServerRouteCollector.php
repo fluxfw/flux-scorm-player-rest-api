@@ -2,6 +2,8 @@
 
 namespace FluxScormPlayerRestApi\Adapter\Server;
 
+use FluxRestApi\Adapter\Route\Collector\RouteCollector;
+use FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
 use FluxScormPlayerRestApi\Adapter\Route\AssetRoute;
 use FluxScormPlayerRestApi\Adapter\Route\DeleteRoute;
 use FluxScormPlayerRestApi\Adapter\Route\GetDataRoute;
@@ -9,8 +11,6 @@ use FluxScormPlayerRestApi\Adapter\Route\PlayRoute;
 use FluxScormPlayerRestApi\Adapter\Route\PostDataRoute;
 use FluxScormPlayerRestApi\Adapter\Route\StaticRoute;
 use FluxScormPlayerRestApi\Adapter\Route\UploadRoute;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Collector\RouteCollector;
-use FluxScormPlayerRestApi\Libs\FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
 
 class ScormPlayerRestApiServerRouteCollector implements RouteCollector
 {
