@@ -17,7 +17,7 @@ RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-file-storage-api && cd
 
 RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-rest-api && cd /build/flux-scorm-player-rest-api/libs/flux-rest-api && wget -O - https://github.com/fluxfw/flux-rest-api/archive/refs/tags/v2023-01-30-1.tar.gz | tar -xz --strip-components=1)
 
-RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && cd /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && wget -O - https://github.com/fluxfw/flux-scorm-player-api/archive/refs/tags/v2023-01-30-1.tar.gz | tar -xz --strip-components=1)
+RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && cd /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && wget -O - https://github.com/fluxfw/flux-scorm-player-api/archive/refs/tags/v2023-01-30-2.tar.gz | tar -xz --strip-components=1)
 
 COPY . /build/flux-scorm-player-rest-api
 
