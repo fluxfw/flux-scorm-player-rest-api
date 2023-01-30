@@ -2,18 +2,18 @@
 
 namespace FluxScormPlayerRestApi\Adapter\Route;
 
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Body\HtmlBodyDto;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Body\Type\DefaultBodyType;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Method\DefaultMethod;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Method\Method;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteDocumentationDto;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteParamDocumentationDto;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteResponseDocumentationDto;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Route\Route;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Server\ServerRequestDto;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Server\ServerResponseDto;
-use FluxScormPlayerRestApi\Libs\FluxRestApi\Adapter\Status\DefaultStatus;
-use FluxScormPlayerRestApi\Libs\FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
+use FluxRestApi\Adapter\Body\HtmlBodyDto;
+use FluxRestApi\Adapter\Body\Type\DefaultBodyType;
+use FluxRestApi\Adapter\Method\DefaultMethod;
+use FluxRestApi\Adapter\Method\Method;
+use FluxRestApi\Adapter\Route\Documentation\RouteDocumentationDto;
+use FluxRestApi\Adapter\Route\Documentation\RouteParamDocumentationDto;
+use FluxRestApi\Adapter\Route\Documentation\RouteResponseDocumentationDto;
+use FluxRestApi\Adapter\Route\Route;
+use FluxRestApi\Adapter\Server\ServerRequestDto;
+use FluxRestApi\Adapter\Server\ServerResponseDto;
+use FluxRestApi\Adapter\Status\DefaultStatus;
+use FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
 
 class PlayRoute implements Route
 {

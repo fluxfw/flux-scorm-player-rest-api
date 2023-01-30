@@ -1,12 +1,23 @@
+FROM node:19-alpine AS npm
+
+RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/scorm-again && cd /build/flux-scorm-player-rest-api/libs/scorm-again && npm install scorm-again@1.7.1)
+
 FROM php:8.2-cli-alpine AS build
 
-RUN (mkdir -p /flux-namespace-changer && cd /flux-namespace-changer && wget -O - https://github.com/fluxfw/flux-namespace-changer/releases/download/v2022-07-12-1/flux-namespace-changer-v2022-07-12-1-build.tar.gz | tar -xz --strip-components=1)
+RUN apk add --no-cache coreutils
 
-RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-autoload-api && cd /build/flux-scorm-player-rest-api/libs/flux-autoload-api && wget -O - https://github.com/fluxfw/flux-autoload-api/releases/download/v2022-12-12-1/flux-autoload-api-v2022-12-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxAutoloadApi FluxScormPlayerRestApi\\Libs\\FluxAutoloadApi)
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-rest-api && cd /build/flux-scorm-player-rest-api/libs/flux-rest-api && wget -O - https://github.com/fluxfw/flux-rest-api/releases/download/v2022-12-12-1/flux-rest-api-v2022-12-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxRestApi FluxScormPlayerRestApi\\Libs\\FluxRestApi)
+RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/mongo-php-library && cd /build/flux-scorm-player-rest-api/libs/mongo-php-library && composer require mongodb/mongodb:1.15.0 --ignore-platform-reqs && cd vendor/mongodb/mongodb && rm -rf $(ls -A -I "composer*" -I "LICENSE*" -I src))
 
-RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && cd /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && wget -O - https://github.com/fluxfw/flux-scorm-player-api/releases/download/v2022-12-12-1/flux-scorm-player-api-v2022-12-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxScormPlayerApi FluxScormPlayerRestApi\\Libs\\FluxScormPlayerApi)
+COPY --from=npm /build/flux-scorm-player-rest-api/libs/scorm-again /build/flux-scorm-player-rest-api/libs/scorm-again
+RUN (cd /build/flux-scorm-player-rest-api/libs/scorm-again/node_modules/scorm-again && rm -rf $(ls -A -I dist -I "LICENSE*" -I "package*") && cd dist && rm -rf $(ls -A -I "*.min.js"))
+
+RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-file-storage-api && cd /build/flux-scorm-player-rest-api/libs/flux-file-storage-api && wget -O - https://github.com/fluxfw/flux-file-storage-api/archive/refs/tags/v2023-01-30-1.tar.gz | tar -xz --strip-components=1)
+
+RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-rest-api && cd /build/flux-scorm-player-rest-api/libs/flux-rest-api && wget -O - https://github.com/fluxfw/flux-rest-api/archive/refs/tags/v2023-01-30-1.tar.gz | tar -xz --strip-components=1)
+
+RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && cd /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && wget -O - https://github.com/fluxfw/flux-scorm-player-api/archive/refs/tags/v2023-01-30-1.tar.gz | tar -xz --strip-components=1)
 
 COPY . /build/flux-scorm-player-rest-api
 

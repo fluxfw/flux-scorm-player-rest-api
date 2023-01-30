@@ -2,7 +2,7 @@
 
 namespace FluxScormPlayerRestApi\Adapter\Server;
 
-use FluxScormPlayerRestApi\Libs\FluxScormPlayerApi\Adapter\Api\ScormPlayerApiConfigDto;
+use FluxScormPlayerApi\Adapter\Api\ScormPlayerApiConfigDto;
 
 class ScormPlayerRestApiServerConfigDto
 {
