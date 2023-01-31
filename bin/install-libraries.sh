@@ -26,7 +26,7 @@ installLibrary flux-file-storage-api https://github.com/fluxfw/flux-file-storage
 
 installLibrary flux-rest-api https://github.com/fluxfw/flux-rest-api/archive/refs/tags/v2023-01-30-1.tar.gz
 
-installLibrary flux-scorm-player-api https://github.com/fluxfw/flux-scorm-player-api/archive/refs/tags/v2023-01-31-1.tar.gz
+installLibrary flux-scorm-player-api https://github.com/fluxfw/flux-scorm-player-api/archive/refs/tags/v2023-01-31-2.tar.gz
 
 installComposerLibrary mongo-php-library mongodb/mongodb:1.15.0
 
