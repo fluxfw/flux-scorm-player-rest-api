@@ -2,10 +2,13 @@
 
 namespace FluxScormPlayerRestApi;
 
-require_once __DIR__ . "/../libs/flux-file-storage-api/autoload.php";
-require_once __DIR__ . "/../libs/flux-rest-api/autoload.php";
-require_once __DIR__ . "/../libs/flux-scorm-player-api/autoload.php";
-require_once __DIR__ . "/../libs/mongo-php-library/vendor/autoload.php";
+require_once __DIR__ . "/../../flux-file-storage-api/autoload.php";
+
+require_once __DIR__ . "/../../flux-rest-api/autoload.php";
+
+require_once __DIR__ . "/../../flux-scorm-player-api/autoload.php";
+
+require_once __DIR__ . "/../../mongo-php-library/vendor/autoload.php";
 
 spl_autoload_register(function (string $class) : void {
     if (str_starts_with($class, __NAMESPACE__ . "\\")) {

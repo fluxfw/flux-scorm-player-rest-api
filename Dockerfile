@@ -1,25 +1,13 @@
-FROM node:19-alpine AS npm
-
-RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/scorm-again && cd /build/flux-scorm-player-rest-api/libs/scorm-again && npm install scorm-again@1.7.1)
-
 FROM php:8.2-cli-alpine AS build
-
-RUN apk add --no-cache coreutils
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/mongo-php-library && cd /build/flux-scorm-player-rest-api/libs/mongo-php-library && composer require mongodb/mongodb:1.15.0 --ignore-platform-reqs && cd vendor/mongodb/mongodb && rm -rf $(ls -A -I "composer*" -I "LICENSE*" -I src))
+COPY bin/install-libraries.sh /build/flux-scorm-player-rest-api/libs/flux-scorm-player-rest-api/bin/install-libraries.sh
+RUN /build/flux-scorm-player-rest-api/libs/flux-scorm-player-rest-api/bin/install-libraries.sh
 
-COPY --from=npm /build/flux-scorm-player-rest-api/libs/scorm-again /build/flux-scorm-player-rest-api/libs/scorm-again
-RUN (cd /build/flux-scorm-player-rest-api/libs/scorm-again/node_modules/scorm-again && rm -rf $(ls -A -I dist -I "LICENSE*" -I "package*") && cd dist && rm -rf $(ls -A -I "*.min.js"))
+RUN ln -s libs/flux-scorm-player-rest-api/bin /build/flux-scorm-player-rest-api/bin
 
-RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-file-storage-api && cd /build/flux-scorm-player-rest-api/libs/flux-file-storage-api && wget -O - https://github.com/fluxfw/flux-file-storage-api/archive/refs/tags/v2023-01-30-1.tar.gz | tar -xz --strip-components=1)
-
-RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-rest-api && cd /build/flux-scorm-player-rest-api/libs/flux-rest-api && wget -O - https://github.com/fluxfw/flux-rest-api/archive/refs/tags/v2023-01-30-1.tar.gz | tar -xz --strip-components=1)
-
-RUN (mkdir -p /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && cd /build/flux-scorm-player-rest-api/libs/flux-scorm-player-api && wget -O - https://github.com/fluxfw/flux-scorm-player-api/archive/refs/tags/v2023-01-30-2.tar.gz | tar -xz --strip-components=1)
-
-COPY . /build/flux-scorm-player-rest-api
+COPY . /build/flux-scorm-player-rest-api/libs/flux-scorm-player-rest-api
 
 FROM php:8.2-cli-alpine
 
@@ -42,6 +30,3 @@ EXPOSE 9501
 ENTRYPOINT ["/flux-scorm-player-rest-api/bin/server.php"]
 
 COPY --from=build /build /
-
-ARG COMMIT_SHA
-LABEL org.opencontainers.image.revision="$COMMIT_SHA"
