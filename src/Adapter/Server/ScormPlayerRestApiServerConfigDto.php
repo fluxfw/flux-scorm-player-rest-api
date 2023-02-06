@@ -2,13 +2,13 @@
 
 namespace FluxScormPlayerRestApi\Adapter\Server;
 
-use FluxScormPlayerApi\Adapter\Api\ScormPlayerApiConfigDto;
+use FluxScormPlayerRestApi\Adapter\Api\ScormPlayerRestApiConfigDto;
 
 class ScormPlayerRestApiServerConfigDto
 {
 
     private function __construct(
-        public readonly ScormPlayerApiConfigDto $scorm_player_api_config,
+        public readonly ScormPlayerRestApiConfigDto $scorm_player_rest_api_config,
         public readonly ?string $https_cert,
         public readonly ?string $https_key,
         public readonly string $listen,
@@ -20,7 +20,7 @@ class ScormPlayerRestApiServerConfigDto
 
 
     public static function new(
-        ScormPlayerApiConfigDto $scorm_player_api_config,
+        ScormPlayerRestApiConfigDto $scorm_player_rest_api_config,
         ?string $https_cert = null,
         ?string $https_key = null,
         ?string $listen = null,
@@ -28,7 +28,7 @@ class ScormPlayerRestApiServerConfigDto
         ?int $max_upload_size = null
     ) : static {
         return new static(
-            $scorm_player_api_config,
+            $scorm_player_rest_api_config,
             $https_cert,
             $https_key,
             $listen ?? "0.0.0.0",
@@ -41,7 +41,7 @@ class ScormPlayerRestApiServerConfigDto
     public static function newFromEnv() : static
     {
         return static::new(
-            ScormPlayerApiConfigDto::newFromEnv(),
+            ScormPlayerRestApiConfigDto::newFromEnv(),
             $_ENV["FLUX_SCORM_PLAYER_REST_API_SERVER_HTTPS_CERT"] ?? null,
             $_ENV["FLUX_SCORM_PLAYER_REST_API_SERVER_HTTPS_KEY"] ?? null,
             $_ENV["FLUX_SCORM_PLAYER_REST_API_SERVER_LISTEN"] ?? null,

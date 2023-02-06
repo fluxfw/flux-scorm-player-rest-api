@@ -15,23 +15,23 @@ use FluxRestApi\Adapter\Route\Route;
 use FluxRestApi\Adapter\Server\ServerRequestDto;
 use FluxRestApi\Adapter\Server\ServerResponseDto;
 use FluxRestApi\Adapter\Status\DefaultStatus;
-use FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
+use FluxScormPlayerRestApi\Adapter\Api\ScormPlayerRestApi;
 
 class PostDataRoute implements Route
 {
 
     private function __construct(
-        private readonly ScormPlayerApi $scorm_player_api
+        private readonly ScormPlayerRestApi $scorm_player_rest_api
     ) {
 
     }
 
 
     public static function new(
-        ScormPlayerApi $scorm_player_api
+        ScormPlayerRestApi $scorm_player_rest_api
     ) : static {
         return new static(
-            $scorm_player_api
+            $scorm_player_rest_api
         );
     }
 
@@ -111,7 +111,7 @@ class PostDataRoute implements Route
             );
         }
 
-        $data = $this->scorm_player_api->storeData(
+        $data = $this->scorm_player_rest_api->storeData(
             $request->getParam(
                 "scorm_id"
             ),
