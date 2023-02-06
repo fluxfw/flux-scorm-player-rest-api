@@ -14,23 +14,23 @@ use FluxRestApi\Adapter\Route\Route;
 use FluxRestApi\Adapter\Server\ServerRequestDto;
 use FluxRestApi\Adapter\Server\ServerResponseDto;
 use FluxRestApi\Adapter\Status\DefaultStatus;
-use FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
+use FluxScormPlayerRestApi\Adapter\Api\ScormPlayerRestApi;
 
 class UploadRoute implements Route
 {
 
     private function __construct(
-        private readonly ScormPlayerApi $scorm_player_api
+        private readonly ScormPlayerRestApi $scorm_player_rest_api
     ) {
 
     }
 
 
     public static function new(
-        ScormPlayerApi $scorm_player_api
+        ScormPlayerRestApi $scorm_player_rest_api
     ) : static {
         return new static(
-            $scorm_player_api
+            $scorm_player_rest_api
         );
     }
 
@@ -87,7 +87,7 @@ class UploadRoute implements Route
             );
         }
 
-        $this->scorm_player_api->uploadScormPackage(
+        $this->scorm_player_rest_api->uploadScormPackage(
             $request->parsed_body->data["id"],
             $request->parsed_body->data["title"],
             $request->parsed_body->files["file"]["tmp_name"]

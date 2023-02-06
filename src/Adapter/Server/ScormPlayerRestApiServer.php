@@ -5,7 +5,7 @@ namespace FluxScormPlayerRestApi\Adapter\Server;
 use FluxRestApi\Adapter\Api\RestApi;
 use FluxRestApi\Adapter\Route\Collector\RouteCollector;
 use FluxRestApi\Adapter\Server\SwooleServerConfigDto;
-use FluxScormPlayerApi\Adapter\Api\ScormPlayerApi;
+use FluxScormPlayerRestApi\Adapter\Api\ScormPlayerRestApi;
 
 class ScormPlayerRestApiServer
 {
@@ -27,8 +27,8 @@ class ScormPlayerRestApiServer
         return new static(
             RestApi::new(),
             ScormPlayerRestApiServerRouteCollector::new(
-                ScormPlayerApi::new(
-                    $scorm_player_rest_api_server_config->scorm_player_api_config
+                ScormPlayerRestApi::new(
+                    $scorm_player_rest_api_server_config->scorm_player_rest_api_config
                 )
             ),
             SwooleServerConfigDto::new(

@@ -2,11 +2,9 @@
 
 namespace FluxScormPlayerRestApi;
 
-require_once __DIR__ . "/../../flux-file-storage-api/autoload.php";
+require_once __DIR__ . "/../../flux-file-storage-rest-api/autoload.php";
 
 require_once __DIR__ . "/../../flux-rest-api/autoload.php";
-
-require_once __DIR__ . "/../../flux-scorm-player-api/autoload.php";
 
 require_once __DIR__ . "/../../mongo-php-library/vendor/autoload.php";
 
